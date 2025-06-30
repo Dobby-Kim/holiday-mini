@@ -15,6 +15,10 @@ spring:
     console:
       enabled: false
 
+nager:
+  api:
+    base-url: https://date.nager.at/api/v3
+
 logging:
   level:
     org.springframework.test: WARN
