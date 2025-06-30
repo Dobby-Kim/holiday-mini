@@ -8,7 +8,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, String> {
 
-    Optional<Country> findByCountryCode(String countryCode);
+    /**
+ * Retrieves a country entity by its country code.
+ *
+ * @param countryCode the unique code identifying the country
+ * @return an {@code Optional} containing the matching {@code Country} if found, or empty if not present
+ */
+Optional<Country> findByCountryCode(String countryCode);
 
-    boolean existsByCountryCode(String countryCode);
+    /**
+ * Checks if a country with the specified country code exists in the database.
+ *
+ * @param countryCode the country code to search for
+ * @return true if a country with the given country code exists, false otherwise
+ */
+boolean existsByCountryCode(String countryCode);
 }

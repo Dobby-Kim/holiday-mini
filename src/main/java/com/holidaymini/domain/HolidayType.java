@@ -15,6 +15,11 @@ public enum HolidayType {
 
     private final String typeName;
 
+    /**
+     * Constructs a HolidayType enum constant with the specified descriptive name.
+     *
+     * @param typeName the human-readable name associated with the holiday type
+     */
     HolidayType(String typeName) {
         this.typeName = typeName;
     }

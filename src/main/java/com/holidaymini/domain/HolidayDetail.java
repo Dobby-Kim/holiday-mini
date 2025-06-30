@@ -34,6 +34,15 @@ public class HolidayDetail {
     @Enumerated(EnumType.STRING)
     private Set<HolidayType> types;
 
+    /**
+     * Constructs a HolidayDetail instance with the specified attributes.
+     *
+     * @param isFixed    whether the holiday date is fixed
+     * @param isGlobal   whether the holiday is globally recognized
+     * @param launchYear the year the holiday was launched, or null if unknown
+     * @param localName  the local name of the holiday
+     * @param types      the set of holiday types associated with the holiday
+     */
     public HolidayDetail(
             Boolean isFixed,
             Boolean isGlobal,

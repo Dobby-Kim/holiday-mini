@@ -7,5 +7,12 @@ import org.springframework.data.domain.Pageable;
 
 public interface HolidayRepositoryCustom {
 
-    Page<Holiday> searchByConditions(HolidaySearchCondition condition, Pageable pageable);
+    /**
+ * Retrieves a paginated list of holidays matching the specified search conditions.
+ *
+ * @param condition the criteria used to filter holidays
+ * @param pageable pagination information for the result set
+ * @return a page of holidays that satisfy the given search conditions
+ */
+Page<Holiday> searchByConditions(HolidaySearchCondition condition, Pageable pageable);
 }

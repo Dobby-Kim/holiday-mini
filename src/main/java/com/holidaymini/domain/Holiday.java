@@ -51,6 +51,16 @@ public class Holiday extends BaseTimeEntity {
     @Embedded
     private HolidayDetail detail;
 
+    /**
+     * Constructs a new Holiday entity with the specified country, date, name, and detail.
+     *
+     * The year is automatically set based on the provided date.
+     *
+     * @param country the country associated with the holiday
+     * @param date the date of the holiday
+     * @param name the name of the holiday
+     * @param detail additional details about the holiday
+     */
     public Holiday(Country country, LocalDate date, String name, HolidayDetail detail) {
         this.country = country;
         this.date = date;
@@ -59,6 +69,12 @@ public class Holiday extends BaseTimeEntity {
         this.detail = detail;
     }
 
+    /**
+     * Determines whether this holiday is equal to another object based on id, country, year, date, and name.
+     *
+     * @param o the object to compare with this holiday
+     * @return true if the specified object is a Holiday with the same id, country, year, date, and name; false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Holiday holiday)) {
@@ -69,11 +85,21 @@ public class Holiday extends BaseTimeEntity {
                 && Objects.equals(name, holiday.name);
     }
 
+    /**
+     * Returns a hash code value for this holiday based on its id, country, year, date, and name.
+     *
+     * @return the hash code value for this holiday
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, country, year, date, name);
     }
 
+    /**
+     * Returns a string representation of the Holiday, including its id, date, local name, name, country name, and year.
+     *
+     * @return a string summarizing the holiday's key attributes
+     */
     @Override
     public String toString() {
         return "Holiday{" +
