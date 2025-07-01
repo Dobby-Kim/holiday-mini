@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(indexes = {
         @Index(name = "idx_holiday_country_year", columnList = "country_id, holiday_year"),
-        @Index(name = "idx_holiday_date", columnList = "date"),
+        @Index(name = "idx_holiday_date", columnList = "holiday_date"),
         @Index(name = "idx_holiday_country_date", columnList = "country_id, holiday_date")
 })
 @Getter
@@ -52,11 +52,18 @@ public class Holiday extends BaseTimeEntity {
     private HolidayDetail detail;
 
     public Holiday(Country country, LocalDate date, String name, HolidayDetail detail) {
+        validateDate(date);
         this.country = country;
         this.date = date;
         this.name = name;
         this.year = date.getYear();
         this.detail = detail;
+    }
+
+    private void validateDate(LocalDate date) {
+        if (date.isBefore(LOWER_DATE_BOUND) || date.isAfter(UPPER_DATE_BOUND)) {
+            throw new IllegalArgumentException("가능 연도: " + LOWER_DATE_BOUND + " - " + UPPER_DATE_BOUND);
+        }
     }
 
     @Override
@@ -79,10 +86,8 @@ public class Holiday extends BaseTimeEntity {
         return "Holiday{" +
                 "id=" + id +
                 ", date=" + date +
-                ", localName='" + detail.getLocalName() + '\'' +
                 ", name='" + name + '\'' +
                 ", countryCode='" + country.getName() + '\'' +
-                ", year=" + year +
                 '}';
     }
 }
