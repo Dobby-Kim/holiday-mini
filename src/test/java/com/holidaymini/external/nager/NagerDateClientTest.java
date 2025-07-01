@@ -73,8 +73,7 @@ class NagerDateClientTest {
         when(requestHeadersUriSpec.uri("/AvailableCountries")).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
-        when(responseSpec.body(any(ParameterizedTypeReference.class)))
-                .thenThrow(new RestClientException("클라이언트 오류"));
+        when(responseSpec.body(any(ParameterizedTypeReference.class))).thenThrow(new RestClientException("클라이언트 오류"));
 
         // when
         List<CountryResponse> result = nagerDateClient.getAvailableCountries();
@@ -89,19 +88,17 @@ class NagerDateClientTest {
         // given
         int year = 2024;
         String countryCode = "KR";
-        List<PublicHolidayResponse> expectedHolidays = List.of(
-                new PublicHolidayResponse(
-                        LocalDate.of(2024, 1, 1),
-                        "신정",
-                        "New Year's Day",
-                        "KR",
-                        List.of("Public")
-                )
-        );
+        List<PublicHolidayResponse> expectedHolidays = List.of(new PublicHolidayResponse(
+                LocalDate.of(2024, 1, 1),
+                "신정",
+                "New Year's Day",
+                "KR",
+                List.of("Public")
+        ));
 
         when(restClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri("/PublicHolidays/{year}/{countryCode}", year, countryCode))
-                .thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri("/PublicHolidays/{year}/{countryCode}", year, countryCode)).thenReturn(
+                requestHeadersUriSpec);
         when(requestHeadersUriSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
         when(responseSpec.body(any(ParameterizedTypeReference.class))).thenReturn(expectedHolidays);
@@ -124,12 +121,11 @@ class NagerDateClientTest {
         String countryCode = "INVALID";
 
         when(restClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri("/PublicHolidays/{year}/{countryCode}", year, countryCode))
-                .thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri("/PublicHolidays/{year}/{countryCode}", year, countryCode)).thenReturn(
+                requestHeadersUriSpec);
         when(requestHeadersUriSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
-        when(responseSpec.body(any(ParameterizedTypeReference.class)))
-                .thenThrow(new RestClientException("클라이언트 오류"));
+        when(responseSpec.body(any(ParameterizedTypeReference.class))).thenThrow(new RestClientException("클라이언트 오류"));
 
         // when
         List<PublicHolidayResponse> result = nagerDateClient.getPublicHolidays(year, countryCode);
@@ -145,13 +141,12 @@ class NagerDateClientTest {
         when(restClient.get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri("/AvailableCountries")).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.retrieve()).thenReturn(responseSpec);
-        when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
-        when(responseSpec.body(any(ParameterizedTypeReference.class)))
-                .thenThrow(new InternalServerException("외부 API 서버 오류로 인해 국가 목록을 조회할 수 없습니다."));
+        when(responseSpec.onStatus(any(), any())).thenThrow(
+                new InternalServerException("외부 API 서버 오류로 인해 국가 목록을 조회할 수 없습니다.")
+        );
 
         // when & then
-        assertThatThrownBy(() -> nagerDateClient.getAvailableCountries())
-                .isInstanceOf(InternalServerException.class)
+        assertThatThrownBy(() -> nagerDateClient.getAvailableCountries()).isInstanceOf(InternalServerException.class)
                 .hasMessage("외부 API 서버 오류로 인해 국가 목록을 조회할 수 없습니다.");
     }
 }

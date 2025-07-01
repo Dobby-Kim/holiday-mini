@@ -55,11 +55,7 @@ public class NagerDateClient implements HolidayApiClient {
                     })
                     .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
                         log.error("{} - 서버 오류: {}", contextMsg, res.getStatusCode());
-                        throw new InternalServerException(
-                                "외부 API 서버 오류로 인해 " +
-                                        contextMsg.replace(" 조회 실패", "") +
-                                        "을(를) 조회할 수 없습니다."
-                        );
+                        throw new InternalServerException("외부 API 서버 오류가 발생했습니다: " + contextMsg);
                     })
                     .body(typeRef);
         } catch (RestClientException e) {
