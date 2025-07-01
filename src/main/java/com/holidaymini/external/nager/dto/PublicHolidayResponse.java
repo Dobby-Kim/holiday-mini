@@ -1,4 +1,4 @@
-package com.holidaymini.external.dto;
+package com.holidaymini.external.nager.dto;
 
 import java.time.LocalDate;
 import java.util.List;

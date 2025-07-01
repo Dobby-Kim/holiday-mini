@@ -1,4 +1,4 @@
-package com.holidaymini.external.dto;
+package com.holidaymini.external.nager.dto;
 
 public record CountryResponse(
         String countryCode,

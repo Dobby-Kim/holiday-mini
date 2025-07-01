@@ -1,4 +1,4 @@
-package com.holidaymini.external;
+package com.holidaymini.external.nager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,8 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.holidaymini.exception.InternalServerException;
-import com.holidaymini.external.dto.CountryResponse;
-import com.holidaymini.external.dto.PublicHolidayResponse;
+import com.holidaymini.external.nager.dto.CountryResponse;
+import com.holidaymini.external.nager.dto.PublicHolidayResponse;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

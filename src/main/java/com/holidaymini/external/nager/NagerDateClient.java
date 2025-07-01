@@ -1,8 +1,9 @@
-package com.holidaymini.external;
+package com.holidaymini.external.nager;
 
 import com.holidaymini.exception.InternalServerException;
-import com.holidaymini.external.dto.CountryResponse;
-import com.holidaymini.external.dto.PublicHolidayResponse;
+import com.holidaymini.external.HolidayApiClient;
+import com.holidaymini.external.nager.dto.CountryResponse;
+import com.holidaymini.external.nager.dto.PublicHolidayResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;

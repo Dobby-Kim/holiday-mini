@@ -1,9 +1,9 @@
-package com.holidaymini.external;
+package com.holidaymini.external.nager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.holidaymini.external.dto.CountryResponse;
-import com.holidaymini.external.dto.PublicHolidayResponse;
+import com.holidaymini.external.nager.dto.CountryResponse;
+import com.holidaymini.external.nager.dto.PublicHolidayResponse;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

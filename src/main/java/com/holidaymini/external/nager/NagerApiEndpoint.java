@@ -1,4 +1,4 @@
-package com.holidaymini.external;
+package com.holidaymini.external.nager;
 
 import lombok.Getter;
 
