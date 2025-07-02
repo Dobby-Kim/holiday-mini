@@ -26,6 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@DisplayName("HolidayService 테스트")
 class HolidayServiceTest {
 
     @Autowired
