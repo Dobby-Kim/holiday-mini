@@ -63,4 +63,12 @@ public class HolidaySearchService {
 
         holidayRepository.deleteAll(existHolidays);
     }
+
+    public void deleteByCountryCodeAndYear(String countryCode, Integer year) {
+        Country targetCountry = countryRepository.findById(countryCode)
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 국가 코드입니다"));
+
+        List<Holiday> existHolidays = holidayRepository.findByCountryAndYear(targetCountry, year);
+        holidayRepository.deleteAll(existHolidays);
+    }
 }
