@@ -8,6 +8,7 @@ import com.holidaymini.exception.NotFoundException;
 import com.holidaymini.repository.CountryRepository;
 import com.holidaymini.repository.HolidayRepository;
 import com.holidaymini.repository.dto.HolidaySearchCondition;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class HolidaySearchService {
 
     private static final int START_YEAR = 2020;
     private static final int END_YEAR = 2025;
 
+    private final NagerDataLoadService nagerDataLoadService;
     private final HolidayRepository holidayRepository;
     private final CountryRepository countryRepository;
 
@@ -37,7 +38,7 @@ public class HolidaySearchService {
     }
 
     private void validateYear(int year) {
-        if(year < START_YEAR || END_YEAR < year) {
+        if (year < START_YEAR || END_YEAR < year) {
             throw new NotFoundException("2020 - 2025년 범위 외의 연도입니다.");
         }
     }
@@ -50,5 +51,16 @@ public class HolidaySearchService {
                 .endDate(request.endDate())
                 .type(request.type())
                 .build();
+    }
+
+    public void upsertByCountryCodeAndYear(String countryCode, int year) {
+        Country targetCountry = countryRepository.findById(countryCode)
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 국가 코드입니다"));
+
+        List<Holiday> existHolidays = holidayRepository.findByCountryAndYear(targetCountry, year);
+
+        nagerDataLoadService.loadHolidaysByCountryAndYear(targetCountry, year);
+
+        holidayRepository.deleteAll(existHolidays);
     }
 }
