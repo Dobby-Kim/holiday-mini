@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +25,7 @@ public class HolidayController {
 
     private final HolidaySearchService holidaySearchService;
 
-    @GetMapping
+    @PostMapping
     public PageResponse<HolidayResponse> searchHolidays(
             @RequestBody @Valid HolidaySearchFilter request,
             @RequestParam(defaultValue = "0") int page,

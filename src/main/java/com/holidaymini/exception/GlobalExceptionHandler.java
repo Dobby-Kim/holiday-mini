@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleCustomException(
+    public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(
             final MethodArgumentNotValidException exception,
             final HttpServletRequest request
     ) {
