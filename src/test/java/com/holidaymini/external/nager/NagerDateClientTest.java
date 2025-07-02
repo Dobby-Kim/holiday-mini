@@ -93,6 +93,8 @@ class NagerDateClientTest {
                 "신정",
                 "New Year's Day",
                 "KR",
+                false,
+                true,
                 List.of("Public")
         ));
 

@@ -19,6 +19,9 @@ nager:
   api:
     base-url: https://date.nager.at/api/v3
 
+data-loader:
+  active: false
+
 logging:
   level:
     org.springframework.test: WARN
