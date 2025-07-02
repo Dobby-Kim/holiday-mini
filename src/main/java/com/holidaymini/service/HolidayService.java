@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class HolidaySearchService {
+public class HolidayService {
 
     private static final int START_YEAR = 2020;
     private static final int END_YEAR = 2025;
