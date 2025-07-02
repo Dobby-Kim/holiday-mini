@@ -52,21 +52,21 @@ class HolidayRepositoryCustomImplTest {
                 korea,
                 LocalDate.of(2023, 1, 1),
                 "신정",
-                new HolidayDetail(true, true, null, "신정", Set.of(HolidayType.PUBLIC))
+                new HolidayDetail(true, true, "신정", Set.of(HolidayType.PUBLIC))
         );
 
         Holiday koreanChildrensDay = new Holiday(
                 korea,
                 LocalDate.of(2023, 5, 5),
                 "어린이날",
-                new HolidayDetail(true, false, 1975, "어린이날", Set.of(HolidayType.PUBLIC, HolidayType.SCHOOL))
+                new HolidayDetail(true, false, "어린이날", Set.of(HolidayType.PUBLIC, HolidayType.SCHOOL))
         );
 
         Holiday koreanChusuk = new Holiday(
                 korea,
                 LocalDate.of(2023, 9, 29),
                 "추석",
-                new HolidayDetail(false, false, null, "추석", Set.of(HolidayType.PUBLIC))
+                new HolidayDetail(false, false, "추석", Set.of(HolidayType.PUBLIC))
         );
 
         // 미국 휴일 데이터
@@ -74,14 +74,14 @@ class HolidayRepositoryCustomImplTest {
                 usa,
                 LocalDate.of(2023, 1, 1),
                 "New Year's Day",
-                new HolidayDetail(true, true, null, "New Year's Day", Set.of(HolidayType.PUBLIC, HolidayType.BANK))
+                new HolidayDetail(true, true, "New Year's Day", Set.of(HolidayType.PUBLIC, HolidayType.BANK))
         );
 
         Holiday usIndependenceDay = new Holiday(
                 usa,
                 LocalDate.of(2023, 7, 4),
                 "Independence Day",
-                new HolidayDetail(true, true, 1776, "Independence Day", Set.of(HolidayType.PUBLIC))
+                new HolidayDetail(true, true, "Independence Day", Set.of(HolidayType.PUBLIC))
         );
 
         // 일본 휴일 데이터 (2024년)
@@ -89,14 +89,14 @@ class HolidayRepositoryCustomImplTest {
                 japan,
                 LocalDate.of(2024, 1, 1),
                 "元日",
-                new HolidayDetail(true, true, null, "元日", Set.of(HolidayType.PUBLIC))
+                new HolidayDetail(true, true, "元日", Set.of(HolidayType.PUBLIC))
         );
 
         Holiday japanGoldenWeek = new Holiday(
                 japan,
                 LocalDate.of(2024, 5, 3),
                 "憲法記念日",
-                new HolidayDetail(true, true, 1947, "憲法記念日", Set.of(HolidayType.PUBLIC, HolidayType.OBSERVANCE))
+                new HolidayDetail(true, true, "憲法記念日", Set.of(HolidayType.PUBLIC, HolidayType.OBSERVANCE))
         );
 
         // 은행 휴일 데이터
@@ -104,7 +104,7 @@ class HolidayRepositoryCustomImplTest {
                 usa,
                 LocalDate.of(2023, 12, 25),
                 "Christmas Day",
-                new HolidayDetail(true, true, null, "Christmas Day", Set.of(HolidayType.BANK))
+                new HolidayDetail(true, true, "Christmas Day", Set.of(HolidayType.BANK))
         );
 
         entityManager.persist(koreanNewYear);
