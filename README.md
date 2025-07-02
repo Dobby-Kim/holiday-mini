@@ -1,28 +1,67 @@
 # holiday-mini
 
+## 빌드 & 실행 방법
+```bash
+# 1) 클린 빌드
+./gradlew clean build
 
-## 목표 
+# 2) 생성된 JAR 실행
+java -jar build/libs/holiday-mini-1.0.0.jar
+```
 
-외부 API 두 개만으로 최근 **5 년(2020 ~ 2025)** 의 전 세계 공휴일 데이터를 **저장·조회·관리**하는 Mini Service 구현
+## Holidays API 명세 요약
+
+### 1. 공휴일 목록 조회
+
+`POST /api/holidays`
+
+| 구분       | 내용                                                                                                                                                                                        |
+|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| URL      | `/api/holidays`                                                                                                                                                                           |
+| Method   | `POST`                                                                                                                                                                                    |
+| Query    | `page` (integer, 기본값 `0`) <br> `size` (integer, 기본값 `20`) <br> `sort` (string\[], 기본값 `["date","asc"]`)                                                                                   |
+| Request  | **Body** (`application/json`) <br> `jsonc {  // HolidaySearchFilter   "countryCode": "KR",   "year": 2021,   "startDate": "2021-01-01",   "endDate": "2021-12-31",   "type": "PUBLIC" } ` |
+| Response | **200 OK**                                                                                                                                                                                |
 
 ---
-## 외부 API 스펙
 
-### 국가목록
+### 2. 공휴일 재동기화 (Upsert)
 
-`GET https://date.nager.at/api/v3/AvailableCountries`
+`PATCH /api/holidays`
 
-**응답**: 국가배열
-
-### 특정 연도 공휴일
-
-`GET https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}`
-
-**응답**:
-
-공휴일  e.g. https://date.nager.at/api/v3/PublicHolidays/2025/KR
+| 구분       | 내용                                                              |
+| -------- | --------------------------------------------------------------- |
+| URL      | `/api/holidays`                                                 |
+| Method   | `PATCH`                                                         |
+| Query    | `countryCode` (string, 필수) <br> `year` (integer, 2020–2025, 필수) |
+| Request  | 없음                                                              |
+| Response | **200 OK** <br> **Body**: 없음                                    |
 
 ---
+
+### 3. 공휴일 삭제
+
+`DELETE /api/holidays`
+
+| 구분       | 내용                                                   |
+| -------- | ---------------------------------------------------- |
+| URL      | `/api/holidays`                                      |
+| Method   | `DELETE`                                             |
+| Query    | `countryCode` (string, 필수) <br> `year` (integer, 필수) |
+| Request  | 없음                                                   |
+| Response | **204 No Content** <br> **Body**: 없음                 |
+
+각 엔드포인트는 인증 없이 호출 가능하며, 입력값 검증에 실패하거나 등록되지 않은 국가 코드일 경우 **400 Bad Request**를 반환
+
+---
+## Test 성공 스크린샷
+
+![img.png](img.png)
+
+
+## Swagger UI
+
+[Swagger UI 바로가기 링크](https://dobby-kim.github.io/holiday-mini)
 
 ## 세부 기능 요구사항
 
