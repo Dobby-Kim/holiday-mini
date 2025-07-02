@@ -1,5 +1,6 @@
 package com.holidaymini.domain;
 
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
@@ -17,5 +18,12 @@ public enum HolidayType {
 
     HolidayType(String typeName) {
         this.typeName = typeName;
+    }
+
+    public static HolidayType convert(String typeString) {
+        return Arrays.stream(HolidayType.values())
+                .filter(type -> type.typeName.equals(typeString))
+                .findFirst()
+                .orElse(PUBLIC);
     }
 }
