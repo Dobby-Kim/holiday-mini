@@ -11,6 +11,7 @@ import com.holidaymini.repository.CountryRepository;
 import com.holidaymini.repository.HolidayRepository;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,8 @@ public class NagerDataLoadService {
     private final CountryRepository countryRepository;
     private final HolidayRepository holidayRepository;
 
-    private int successfulCountries = 0;
-    private int failedCountries = 0;
+    private final AtomicInteger successfulCountries = new AtomicInteger(0);
+    private final AtomicInteger failedCountries = new AtomicInteger(0);
 
     @Transactional
     public Set<Country> loadCountries() {
@@ -49,10 +50,10 @@ public class NagerDataLoadService {
             holidayRepository.saveAll(holidays);
             log.debug("{}년 {} 공휴일 {}개 저장", year, country.getCountryCode(), holidays.size());
 
-            successfulCountries++;
+            successfulCountries.incrementAndGet();
         } catch (Exception e) {
             log.warn("국가 {}의 공휴일 데이터 로드 실패: {}", country.getCountryCode(), e.getMessage());
-            failedCountries++;
+            failedCountries.incrementAndGet();
         }
     }
 
