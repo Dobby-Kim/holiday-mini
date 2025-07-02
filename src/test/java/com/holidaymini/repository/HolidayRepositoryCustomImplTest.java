@@ -16,12 +16,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
 @DisplayName("HolidayRepositoryCustomImpl 테스트")
 class HolidayRepositoryCustomImplTest {
@@ -38,6 +39,9 @@ class HolidayRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+        entityManager.flush();
+        entityManager.clear();
+
         // Given: 테스트 데이터 준비
         korea = new Country("KR", "대한민국");
         usa = new Country("US", "미국");

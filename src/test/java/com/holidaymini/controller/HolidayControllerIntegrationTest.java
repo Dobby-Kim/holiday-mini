@@ -81,7 +81,7 @@ class HolidayControllerIntegrationTest {
         HolidaySearchFilter filter = new HolidaySearchFilter("KR", 2025, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10&sort=date,asc")
+                .when().post("/api/holidays?page=0&size=10&sort=date,asc")
                 .then().statusCode(200).body("content", hasSize(3)).body(
                         "content.name",
                         contains("Lunar New Year", "Dobby Birthday", "Chuseok")
@@ -100,7 +100,7 @@ class HolidayControllerIntegrationTest {
         );
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10&sort=date,asc")
+                .when().post("/api/holidays?page=0&size=10&sort=date,asc")
                 .then().statusCode(200).body("content", hasSize(2)).body(
                         "content.name",
                         contains("Lunar New Year", "Dobby Birthday")
@@ -119,7 +119,7 @@ class HolidayControllerIntegrationTest {
         );
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10&sort=date,asc")
+                .when().post("/api/holidays?page=0&size=10&sort=date,asc")
                 .then().statusCode(200).body("content", hasSize(1)).body(
                         "content.name",
                         contains("Dobby Birthday")
@@ -138,7 +138,7 @@ class HolidayControllerIntegrationTest {
         );
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10&sort=date,asc")
+                .when().post("/api/holidays?page=0&size=10&sort=date,asc")
                 .then().statusCode(200).body("content", hasSize(1)).body(
                         "content.name",
                         contains("Dobby Birthday")
@@ -149,7 +149,7 @@ class HolidayControllerIntegrationTest {
     @DisplayName("정렬 옵션 변경 시 결과가 올바르게 정렬된다")
     void testSorting() {
         RestAssured.given().contentType(JSON).body(new HolidaySearchFilter("KR", 2025, null, null, null))
-                .when().get("/api/holidays?page=0&size=10&sort=name,desc")
+                .when().post("/api/holidays?page=0&size=10&sort=name,desc")
                 .then().statusCode(200).body("content.name[0]", equalTo("Lunar New Year")).body(
                         "content.name[-1]",
                         equalTo("Chuseok")
@@ -162,7 +162,7 @@ class HolidayControllerIntegrationTest {
         HolidaySearchFilter filter = new HolidaySearchFilter("INVALID_CODE", 2025, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10")
+                .when().post("/api/holidays?page=0&size=10")
                 .then().statusCode(400);
     }
 
@@ -172,7 +172,7 @@ class HolidayControllerIntegrationTest {
         HolidaySearchFilter filter = new HolidaySearchFilter(null, 2025, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10")
+                .when().post("/api/holidays?page=0&size=10")
                 .then().statusCode(400);
     }
 
@@ -182,7 +182,7 @@ class HolidayControllerIntegrationTest {
         HolidaySearchFilter filter = new HolidaySearchFilter("KR", 2099, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10")
+                .when().post("/api/holidays?page=0&size=10")
                 .then().statusCode(404);
     }
 
@@ -192,7 +192,7 @@ class HolidayControllerIntegrationTest {
         HolidaySearchFilter filter = new HolidaySearchFilter("KR", null, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
-                .when().get("/api/holidays?page=0&size=10")
+                .when().post("/api/holidays?page=0&size=10")
                 .then().statusCode(400);
     }
 }
