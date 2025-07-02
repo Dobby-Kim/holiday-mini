@@ -6,6 +6,10 @@ import com.holidaymini.controller.dto.PageResponse;
 import com.holidaymini.domain.Holiday;
 import com.holidaymini.service.HolidaySearchService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,7 +75,9 @@ public class HolidayController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> upsert(@RequestParam String countryCode, @RequestParam Integer year) {
+    public ResponseEntity<Void> upsert(
+            @RequestParam @NotBlank(message = "국가 코드는 필수입니다") String countryCode,
+            @RequestParam @NotNull(message = "연도는 필수입니다") @Min(2020) @Max(2025) Integer year) {
         holidaySearchService.upsertByCountryCodeAndYear(countryCode, year);
 
         return ResponseEntity.ok().build();
