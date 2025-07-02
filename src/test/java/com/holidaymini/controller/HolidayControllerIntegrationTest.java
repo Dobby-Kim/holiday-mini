@@ -27,6 +27,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@DisplayName("HolidayController 통합 테스트")
 class HolidayControllerIntegrationTest {
 
     @LocalServerPort
