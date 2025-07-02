@@ -27,8 +27,6 @@ public class HolidayDetail {
     @Column(nullable = false)
     private Boolean isGlobal;
 
-    private Integer launchYear;
-
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "holiday_types", joinColumns = @JoinColumn(name = "holiday_id"))
     @Enumerated(EnumType.STRING)
@@ -37,13 +35,11 @@ public class HolidayDetail {
     public HolidayDetail(
             Boolean isFixed,
             Boolean isGlobal,
-            Integer launchYear,
             String localName,
             Set<HolidayType> types
     ) {
         this.isFixed = isFixed;
         this.isGlobal = isGlobal;
-        this.launchYear = launchYear;
         this.localName = localName;
         this.types = types;
     }

@@ -19,6 +19,9 @@ nager:
   api:
     base-url: https://date.nager.at/api/v3
 
+data-loader:
+  active: true
+
 springdoc:
   api-docs:
     path: /api-docs
