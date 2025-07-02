@@ -6,7 +6,7 @@
 ./gradlew clean build
 
 # 2) 생성된 JAR 실행
-java -jar build/libs/holiday-mini-1.0.0.jar
+java -jar build/libs/holiday-mini-0.0.1-SNAPSHOT.jar
 ```
 
 ## Holidays API 명세 요약
