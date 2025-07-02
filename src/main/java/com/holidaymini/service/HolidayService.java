@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class HolidaySearchService {
+public class HolidayService {
 
     private static final int START_YEAR = 2020;
     private static final int END_YEAR = 2025;
@@ -61,6 +61,14 @@ public class HolidaySearchService {
 
         nagerDataLoadService.loadHolidaysByCountryAndYear(targetCountry, year);
 
+        holidayRepository.deleteAll(existHolidays);
+    }
+
+    public void deleteByCountryCodeAndYear(String countryCode, Integer year) {
+        Country targetCountry = countryRepository.findById(countryCode)
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 국가 코드입니다"));
+
+        List<Holiday> existHolidays = holidayRepository.findByCountryAndYear(targetCountry, year);
         holidayRepository.deleteAll(existHolidays);
     }
 }

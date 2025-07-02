@@ -26,10 +26,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class HolidaySearchServiceTest {
+class HolidayServiceTest {
 
     @Autowired
-    private HolidaySearchService holidaySearchService;
+    private HolidayService holidayService;
 
     @Autowired
     private CountryRepository countryRepository;
@@ -80,7 +80,7 @@ class HolidaySearchServiceTest {
         PageRequest pr = PageRequest.of(0, 10, Sort.by("date").ascending());
 
         // when
-        Page<Holiday> result = holidaySearchService.searchHolidays(filter, pr);
+        Page<Holiday> result = holidayService.searchHolidays(filter, pr);
 
         // then
         assertThat(result.getTotalElements()).isEqualTo(3);
@@ -97,7 +97,7 @@ class HolidaySearchServiceTest {
         PageRequest pr = PageRequest.of(0, 10, Sort.by("date"));
 
         // then
-        assertThatThrownBy(() -> holidaySearchService.searchHolidays(filter, pr))
+        assertThatThrownBy(() -> holidayService.searchHolidays(filter, pr))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("등록되지 않은 국가 코드입니다");
     }
@@ -111,11 +111,11 @@ class HolidaySearchServiceTest {
         PageRequest pr = PageRequest.of(0, 5, Sort.by("date"));
 
         // then
-        assertThatThrownBy(() -> holidaySearchService.searchHolidays(tooEarly, pr))
+        assertThatThrownBy(() -> holidayService.searchHolidays(tooEarly, pr))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("2020 - 2025년 범위 외의 연도입니다.");
 
-        assertThatThrownBy(() -> holidaySearchService.searchHolidays(tooLate, pr))
+        assertThatThrownBy(() -> holidayService.searchHolidays(tooLate, pr))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("2020 - 2025년 범위 외의 연도입니다.");
     }
@@ -129,7 +129,7 @@ class HolidaySearchServiceTest {
         PageRequest pr = PageRequest.of(0, 10, Sort.by("date"));
 
         // when
-        Page<Holiday> result = holidaySearchService.searchHolidays(filter, pr);
+        Page<Holiday> result = holidayService.searchHolidays(filter, pr);
 
         // then
         assertThat(result.getTotalElements()).isEqualTo(1);
@@ -144,7 +144,7 @@ class HolidaySearchServiceTest {
         PageRequest pr = PageRequest.of(0, 10, Sort.by("date"));
 
         // when
-        Page<Holiday> result = holidaySearchService.searchHolidays(filter, pr);
+        Page<Holiday> result = holidayService.searchHolidays(filter, pr);
 
         // then
         assertThat(result.getTotalElements()).isEqualTo(1);

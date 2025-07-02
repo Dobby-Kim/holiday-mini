@@ -4,7 +4,7 @@ import com.holidaymini.controller.dto.HolidayResponse;
 import com.holidaymini.controller.dto.HolidaySearchFilter;
 import com.holidaymini.controller.dto.PageResponse;
 import com.holidaymini.domain.Holiday;
-import com.holidaymini.service.HolidaySearchService;
+import com.holidaymini.service.HolidayService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HolidayController {
 
-    private final HolidaySearchService holidaySearchService;
+    private final HolidayService holidayService;
 
     @PostMapping
     public PageResponse<HolidayResponse> searchHolidays(
@@ -39,7 +40,7 @@ public class HolidayController {
             @RequestParam(defaultValue = "date,asc") String[] sort
     ) {
         Pageable pageable = createPageable(page, size, sort);
-        Page<Holiday> holidayPage = holidaySearchService.searchHolidays(request, pageable);
+        Page<Holiday> holidayPage = holidayService.searchHolidays(request, pageable);
 
         List<HolidayResponse> content = holidayPage.getContent()
                 .stream()
@@ -78,8 +79,15 @@ public class HolidayController {
     public ResponseEntity<Void> upsert(
             @RequestParam @NotBlank(message = "국가 코드는 필수입니다") String countryCode,
             @RequestParam @NotNull(message = "연도는 필수입니다") @Min(2020) @Max(2025) Integer year) {
-        holidaySearchService.upsertByCountryCodeAndYear(countryCode, year);
+        holidayService.upsertByCountryCodeAndYear(countryCode, year);
 
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> delete(String countryCode, Integer year) {
+        holidayService.deleteByCountryCodeAndYear(countryCode, year);
+
+        return ResponseEntity.noContent().build();
     }
 }

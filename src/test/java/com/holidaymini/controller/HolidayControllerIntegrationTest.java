@@ -1,6 +1,7 @@
 package com.holidaymini.controller;
 
 import static io.restassured.http.ContentType.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -15,6 +16,7 @@ import com.holidaymini.repository.HolidayRepository;
 import io.restassured.RestAssured;
 import java.time.LocalDate;
 import java.util.EnumSet;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,13 +38,16 @@ class HolidayControllerIntegrationTest {
     @Autowired
     HolidayRepository holidayRepository;
 
+    private Country kr;
+    private Country us;
+
     @BeforeEach
     void setUp() {
         holidayRepository.deleteAll();
         countryRepository.deleteAll();
 
-        Country kr = countryRepository.save(new Country("KR", "Korea"));
-        Country us = countryRepository.save(new Country("US", "United States"));
+        kr = countryRepository.save(new Country("KR", "Korea"));
+        us = countryRepository.save(new Country("US", "United States"));
 
         // KR 2025 공휴일 2건
         HolidayDetail detail1 = new HolidayDetail(true, false, "설날", EnumSet.of(HolidayType.PUBLIC));
@@ -187,12 +192,31 @@ class HolidayControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("요청에 연도 미포함 시, 검색시 400 에러를 반환한다")
+    @DisplayName("delete 요청 시, 해단 모든 데이터를 삭제한다.")
     void testInvalid_Empty_Year() {
         HolidaySearchFilter filter = new HolidaySearchFilter("KR", null, null, null, null);
 
         RestAssured.given().contentType(JSON).body(filter)
                 .when().post("/api/holidays?page=0&size=10")
                 .then().statusCode(400);
+    }
+
+    @Test
+    @DisplayName("요청에 연도 미포함 시, 검색시 400 에러를 반환한다")
+    void delete() {
+        String countryCode = "KR";
+        int year = 2025;
+        Country korea = new Country(countryCode, "Korea");
+
+        List<Holiday> before = holidayRepository.findByCountryAndYear(korea, year);
+        assertThat(before).isNotEmpty();
+
+        RestAssured.given().contentType(JSON)
+                .when().delete("/api/holidays?countryCode=" + countryCode + "&year=" + year)
+                .then().statusCode(204);
+
+
+        List<Holiday> actualHolidays = holidayRepository.findByCountryAndYear(korea, year);
+        assertThat(actualHolidays).isEmpty();
     }
 }
